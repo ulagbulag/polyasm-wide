@@ -781,7 +781,7 @@ fn software_sqrt(x: f64) -> f64 {
   // extract data
 
   pick! {
-    if #[cfg(target_endian = "little")]
+    if #[cfg(any(target_endian = "little", target_abi = "polyasm"))]
     {
       let [low, high]: [u32; 2] = cast(x);
       ix0 = high as i32;
@@ -915,7 +915,7 @@ fn software_sqrt(x: f64) -> f64 {
   ix0 += m << 20;
 
   pick! {
-    if #[cfg(target_endian = "little")]
+    if #[cfg(any(target_endian = "little", target_abi = "polyasm"))]
     {
       cast::<[u32; 2], f64>([ix1.0, ix0 as u32])
     }
